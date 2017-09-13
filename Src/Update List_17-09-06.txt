@@ -1,0 +1,224 @@
+<< TRansCAD 6.1.1 change log >>
+Release date: 2017-09-06
+1. 수정
+- AutomationAPI
+	* AssemAuto.cpp
+		1) CAssemAuto::GetComponent
+		: Assem과 Component의 관계를 이어주는 함수 추가
+		: pComp->InitializeDispatchImplEx(m_pApplication, this);
+		
+	* ComponentAuto.cpp
+		1) CComponentAuto::GetPart
+		: Component와 Part의 관계를 이어주는 함수 추가
+		: pPart->InitializeDispatchImplEx(m_pApplication, this);
+		
+- PartModelingEngine(PME)
+	* PmeStdAssemblyConstraints class
+		1) 소멸자에서 constraint들을 삭제 시, vector range를 벗어나는 에러 발생
+		: PmeStdAssemblyConstraint class의 소멸자에서 내용을 삭제하지 않고,
+		  PmeAssembly class의 소멸자에서 삭제 처리
+		  
+- TransCAD
+	* About dialog
+		1) Copyright 문장 변경
+		: TransCAD ⓒ KAIST iCAD Lab. 2003-2017
+		
+		2) TransCAD 버전 및 Release 날짜 표기
+
+<< TransCAD 6.1 change log >>
+Release date: 2017-06-28
+1. 추가
+- AutomationAPI
+	* ICompPtr
+		1) CreatePart
+		: description) 새로운 파트를 생성
+		: ex) _spComp->CreatePart( "ConstrainedPart" )
+		
+		2) ImportPartFromXML
+		: description) part정보를 담고있는 XML을 이용하여 part정보 불러오기
+		: ex) _spComp->ImportPartFromXML( "D:\\A1_Body.xml", _spReferPart )
+		
+		3) SetPartPlacement
+		: description) Part의 위치를 변경
+		: ex) _spComp->SetPartPlacement( _spConstrainedPart,
+										 100,	// Positon X
+										 100,	// Positon Y
+										 100,	// Positon Z
+										 0,		// Direction zx
+										 0,		// Direction zy
+										 1,		// Direction zz
+										 1,		// Direction xx
+										 0,		// Direction xy
+										 0 		// Direction xz )
+
+	* IStdAssemConstraintsPtr
+		1) AddNewAssemblyCoaxialConstraint
+		: description) 새로운 Coaxial constraint를 추가
+		: ex) _spConstraints->AddNewAssemblyCoaxialConstraint( "Coaxial",
+															   _spConstrainedPart,
+															   _spConstrainedGeom,
+															   _spReferPart,
+															   _spReferGeom )
+		
+		2) AddNewAssemblyIncidenceConstraint
+		: description) 새로운 Incidence constraint를 추가
+		: ex) _spConstraints->AddNewAssemblyIncidenceConstraint( "Incidence",
+																 _spConstrainedPart,
+																 _spConstrainedGeom,
+																 _spReferPart,
+																 _spReferGeom,
+																 TransCAD::StdAssemblyIncidenceType::Opposite )
+		
+
+<< TransCAD 6.0 change log >>
+Release date: 2017-06-26
+1. 추가
+- TransCAD GUI
+	* 테스트모델 생성 ( A1 모델)
+	* 어셈블리 제약조건 다이얼로그 추가
+		: Coaxial, Incidence, Parallel, Perpendicular, Distance, Angle
+
+- PartModelingEngine
+	* 어셈블리 제약조건 PME 추가
+		1) PmeStdAssemblyCoaxial
+		: description) Coaxial constraint를 생성
+		: 사용가능한 지오메트리 : Face(Cylinderical), Edge(Circular)
+		: 4개의 조합이 가능
+		: ex) Face-Face, Edge-Edge, Face-Edge, Edge-Face
+		
+		2) PmeStdAssemblyIncidence
+		: description) Incidence constraint를 생성
+		: 사용가능한 지오메트리 : Face(Planar), Edge(Linear), Vertex
+		: 사용가능한 옵션 : Opposite, Same
+		: TransCAD 6.0에서는 2개의 조합이 가능
+		: ex) Face-Face, Edge-Edge
+		
+		3) PmeStdAssemblyParallel
+		: description) Parallel constraint를 생성
+		: 사용가능한 지오메트리 : Face(Planr, Cylinderical), Edge(Linear)
+		
+		4) PmeStdAssemblyPerpendicular
+		: description) Perpendicular constraint를 생성
+		: 사용가능한 지오메트리 : Face(Planr, Cylinderical), Edge(Linear)
+		
+		5) PmeStdAssemblyDistance
+		: description) Distance constraint를 생성
+		: 사용가능한 지오메트리 : Face(Planar), Edge(Linear), Vertex
+		: 사용가능한 옵션 : Opposite, Same
+		: TransCAD 6.0에서는 1개의 조합이 가능
+		: ex) Face(Planar)-Face(Planar)		
+		
+		6) PmeStdAssemblyAngle
+		: description) Angle constraint를 생성
+		: 사용가능한 지오메트리 : Face(Planar), Edge(Linear)
+		
+		7) PmeStdAssemblyConstraintType
+		: description) Constraint 타입을 정의한 열거자, 총 6개의 타입을 정의
+		: PmeStdAssemblyConstraintType_Coaxial,
+		  PmeStdAssemblyConstraintType_Incidence,
+		  PmeStdAssemblyConstraintType_Perpendicular,
+		  PmeStdAssemblyConstraintType_Parallel,
+		  PmeStdAssemblyConstraintType_Distance,
+		  PmeStdAssemblyConstraintType_Angle
+	
+	* 어셈블리 제약조건 PME에 해당하는 PME API 추가
+	
+- Automation API
+	* IAssemPtr
+		1) GetConstraints
+		: description) Assem 문서에 존재하는 Constraints 클래스를 리턴
+		: ex) _spAssem->GetConstraints()
+	
+	* IStdAssemConstraintsPtr
+		1) Count
+		: description) Constraints 클래스에 있는 Constraint의 수를 리턴
+		: ex) _spConstraints->GetCount()
+		
+		2) Item
+		: description) 인덱스에 해당하는 constraint를 리턴
+		: ex) _spConstraints->GetItem( 1 )
+	
+	* IStdAssemConstraintImpl
+		: 어셈블리 제약조건들의 부모 클래스
+		
+	* IStdAssemConstraintCoaxialPtr
+		1) GetConstrainedPart
+		: description) ConstrainedPart(어셈블리 제약조건 부여 시, 움직이는 파트)를 리턴
+		: ex) _spCoaxial->GetConstrainedPart()
+		
+		2) GetConstrainedGeometry
+		: description) ConstrainedGeometry(어셈블리 제약조건 부여 시, ConstrainedPart에서 선택된 지오메트리)를 리턴
+		: ex) _spCoaxial->GetConstrainedGeometry()
+		
+		3) GetReferencePart
+		: description) ReferencePart(어셈블리 제약조건 부여 시, 기준이 되는 파트)를 리턴
+		: ex) _spCoaxial->GetReferencePart()
+		
+		4) GetReferenceGeometry
+		: description) ReferenceGeometry(어셈블리 제약조건 부여 시, ReferencePart에서 선택된 지오메트리)를 리턴
+		: ex) _spCoaxial->GetReferenceGeometry()
+		
+	* IStdAssemConstraintIncidencePtr
+		1) GetConstrainedPart
+		: description) ConstrainedPart(어셈블리 제약조건 부여 시, 움직이는 파트)를 리턴
+		: ex) _spIncidence->GetConstrainedPart()
+		
+		2) GetConstrainedGeometry
+		: description) ConstrainedGeometry(어셈블리 제약조건 부여 시, ConstrainedPart에서 선택된 지오메트리)를 리턴
+		: ex) _spIncidence->GetConstrainedGeometry()
+		
+		3) GetReferencePart
+		: description) ReferencePart(어셈블리 제약조건 부여 시, 기준이 되는 파트)를 리턴
+		: ex) _spIncidence->GetReferencePart()
+		
+		4) GetReferenceGeometry
+		: description) ReferenceGeometry(어셈블리 제약조건 부여 시, ReferencePart에서 선택된 지오메트리)를 리턴
+		: ex) _spIncidence->GetReferenceGeometry()
+
+<< TransCAD 5.0 change log >>
+1. 추가
+- TransCAD GUI
+	* 특징형상 생성 및 수정 (트리 더블 클릭, Insert 메뉴)
+		: Circular Pattern, Shell, Offset, Draft, Revolve, Sweep, Hole, Datum Plane Offset
+	* 마우스 조작 기능 추가
+		: 스크롤 더블 클릭 (전체 화면)
+	* 가시화 창에서 모델 더블 클릭 시 클릭한 면이 속한 특징형상 수정 창 팝업
+- Automation API
+	* ISolidPtr
+		: 모델 기하 정보 접근 시 사용
+		: ex) ISolidPtr pSolid = pPart->GetSolid();
+	* IFacesPtr, IFacePtr
+		: 기하 정보 중, 면 정보 접근 시 사용
+		: ex) IFacesPtr pFaces = pSolid->GetFaces(); (모델의 모든 face)
+		: ex) IFacePtr pFace = pFaces->GetItem(1);
+	* IEdgesPtr, IEdgePtr
+		: 기하 정보 중, 선 정보 접근 시 사용
+		: ex) IEdgesPtr pEdges = pSolid->GetEdges(); (모델의 모든 edge)
+		: ex) IEdgesPtr pEdges = pFace->GetEdges(); (면의 모든 edge)
+		: ex) IEdgePtr pEdge = pEdges->GetItem(1);
+	* IVerticesPtr, IVertexPtr
+		: 기하 정보 중, 점 정보 접근 시 사용
+		: ex) IVerticesPtr pVertices = pSolid->GetVertices(); (모델의 모든 vertex)
+		: ex) IVerticesPtr pVertices = pFace->GetVertices(); (면의 모든 vertex)
+		: ex) IVertexPtr pVertex = pVertices->GetItem(1);
+		: ex) IVertexPtr pVertex = pEdge->GetStartPoint();
+		: ex) IVertexPtr pVertex = pEdge->GetEndPoint();
+- 번역기
+	* CATIAPre, CATIAPost API기반 번역기 추가 (~K6 모델까지)
+2. 수정
+- Automation API
+	* IStdSolidPatternRectangularFeaturePtr, IStdSolidPatternCircularFeaturePtr
+		: 파트 바디 자체를 인자로 받을 수 있도록 수정
+		: ex) 파트 바디는 아래와 같이 선택 가능
+		      IReferencePtr pReference = pPart->SelectObjectByName("PartBody");
+	* SelectCurveByPoint() (IPartPtr 멤버 함수)
+		: Circular Edge의 경우 특정 점으로 선택 불가능했던 케이스 수정
+- Persistent Naming 모듈
+	*  Face, Edge 선택 기능 개선
+		: 잘못 된 Face 혹은 Edge가 선택되는 경우를 수정
+- 번역기
+	* NXPre, NXPost 최신본 업데이트
+	* CATIAPre, CATIAPost 최신본 업데이트
+
+3. 제거
+- N/A

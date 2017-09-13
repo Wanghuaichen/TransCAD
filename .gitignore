@@ -1,0 +1,12 @@
+# Created folders after building
+Bin/
+Installer/Debug/Installer.msi
+Installer/Release/Installer.msi
+IntmDir/
+ipch/
+Lib/
+License/
+RegBin/
+
+# Visual Studio file
+*.sdf
