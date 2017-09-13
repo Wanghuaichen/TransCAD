@@ -10,3 +10,4 @@ RegBin/
 
 # Visual Studio file
 *.sdf
+Src/TransCAD/TransCAD_i.h
