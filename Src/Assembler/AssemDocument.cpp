@@ -188,101 +188,14 @@ BOOL AssemDocument::OnNewDocument()
 
 	Initialize();	
 
-	// Start test
-	
-//	PmeHComponent hComp1 = 0;
-//	PmeComponentAPI::Create( hComp1 );
-//	PmeComponentAPI::SetName( hComp1, _T("Component1") );
-//
-//	PmeHComponent hComp1_1 = 0;
-//	PmeComponentAPI::Create( hComp1_1 );
-//	PmeComponentAPI::SetName( hComp1_1, _T("Component1_1") );
-//	
-//	PmeHComponent hComp1_1_1 = 0;
-//	PmeComponentAPI::Create( hComp1_1_1 );
-//	PmeComponentAPI::SetName( hComp1_1_1, _T("Component1_1_1") );
-//
-//	PmeHComponent hComp1_1_1_1 = 0;
-//	PmeComponentAPI::Create( hComp1_1_1_1 );
-//	PmeComponentAPI::SetName( hComp1_1_1_1, _T("Component1_1_1_1") );
-//	
-//	PmeHComponent hComp2 = 0;
-//	PmeComponentAPI::Create( hComp2 );
-//	PmeComponentAPI::SetName( hComp2, _T("Component2") );
-//
-//	// -----------------------------------------------------------------
-//	PmeHPart m_hConstrainedPart, m_hReferencePart;
-//	PmePartAPI::Create( m_hConstrainedPart );
-//	PmePartAPI::SetName( m_hConstrainedPart, "RotationPart" );
-//
-//	PmePartAPI::Create( m_hReferencePart );
-//	PmePartAPI::SetName( m_hReferencePart, "Body" );
-//
-//	CString path;
-//
-//#ifdef _DEBUG
-//	
-//	path = _T("..\\..\\RegBin\\Assembly_models\\A1\\A1_Body.xml");
-//	PmePartAPI::LoadXmlMacro( path, m_hReferencePart );
-//
-//	path = _T( "..\\..\\RegBin\\Assembly_models\\A1\\A1_RotationPart.xml" );
-//	PmePartAPI::LoadXmlMacro( path, m_hConstrainedPart );
-//
-//#else
-//
-//	path = _T( "Assembly_models\\A1\\A1_Body.xml" );
-//	PmePartAPI::LoadXmlMacro( path, m_hConstrainedPart );
-//
-//	path = _T( "Assembly_models\\A1\\A1_RotationPart.xml" );
-//	PmePartAPI::LoadXmlMacro( path, m_hReferencePart );
-//
-//#endif
-//
-//	MrAxis2 t = MrAxis2( MrPosition( 160.0, 50.0, 80.0 ), MrDirection( 0.0, 0.0, 1.0 ), MrDirection( 1.0, 0.0, 0.0 ) );
-//
-//	PmePartAPI::SetPlacement( m_hConstrainedPart, t );
-//
-//	PmeComponentAPI::AddPart( hComp1_1, m_hConstrainedPart );
-//	PmeComponentAPI::AddPart( hComp2, m_hReferencePart );
-//
-//	PmeComponentAPI::AddComponent( hComp1_1_1, hComp1_1_1_1 );
-//	PmeComponentAPI::AddComponent( hComp1_1, hComp1_1_1 );
-//	PmeComponentAPI::AddComponent( hComp1, hComp1_1 );
-//	
-//	
-//
-//	PmeAssemblyAPI::AddComponent( m_hAssembly, hComp1 );
-//	PmeAssemblyAPI::AddComponent( m_hAssembly, hComp2 );
-
-	//PmeAssemblyAPI::UpdateAll( m_hAssembly );
-
-	//PmeAssemblyAPI::UpdateAll( m_hAssembly );
-
-	/*int compSize;
-	PmeAssemblyAPI::GetSize( m_hAssembly, compSize );
-	
-	for ( int i = 0; i < compSize; ++i )
-	{
-		PmeHComponent testComp = 0;
-		PmeAssemblyAPI::GetComponent( m_hAssembly, i, testComp );
-
-		int compSize2;
-		int partSize;
-		PmeComponentAPI::GetCompSize( testComp, compSize2 );
-		PmeComponentAPI::GetPartSize( testComp, partSize );
-
-		int a = 0;
-	}*/
-
+	//OnTestmodelCreateA1Model();
 	
 
-	// End test
 	return TRUE;
 }
 
 
 // AssemDocument serialization
-
 void AssemDocument::Serialize(CArchive& ar)
 {
 	if (ar.IsStoring())
@@ -297,7 +210,6 @@ void AssemDocument::Serialize(CArchive& ar)
 
 
 // AssemDocument 진단
-
 #ifdef _DEBUG
 void AssemDocument::AssertValid() const
 {
@@ -663,6 +575,7 @@ void AssemDocument::OnTestmodelCreateA1Model()
 
 #endif
 
+	// 모델 구분을 쉽게 하기위해, 위치 이동
 	MrAxis2 t = MrAxis2( MrPosition( 160.0, 50.0, 80.0 ), MrDirection( 0.0, 0.0, 1.0 ), MrDirection( 1.0, 0.0, 0.0 ) );
 
 	PmePartAPI::SetPlacement( m_hConstrainedPart, t );
@@ -693,6 +606,7 @@ void AssemDocument::OnTestmodelCreateA1Model()
 }
 
 
+// A2 모델 수정해야함
 void AssemDocument::OnTestmodelCreateA2Model()
 {
 	PmeHComponent hComp = 0;

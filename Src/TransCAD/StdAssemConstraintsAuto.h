@@ -48,9 +48,10 @@ private:
 	HRESULT GetIStdAssemConstraintFromHStdAssemConstraint( PmeHStdAssemblyConstraint, IStdAssemConstraint **ppVal );
 public:
 	STDMETHOD(get_Count)(long* pVal);
-	STDMETHOD(get_Item)(long index, IStdAssemConstraint** ppVal);
+	STDMETHOD(get_Constraint)(long index, IStdAssemConstraint** ppVal);
 	STDMETHOD(get__NewEnum)( IUnknown** ppUnk );
-	STDMETHOD(GetConstraint)(long index, IStdAssemConstraint** ppVal);
+
+	STDMETHOD(SelectConstraintByName)(BSTR name, IStdAssemConstraint** ppVal);
 	
 
 	// Add methods for pre-processor

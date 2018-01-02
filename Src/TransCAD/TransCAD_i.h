@@ -4,7 +4,7 @@
 
 
  /* File created by MIDL compiler version 7.00.0555 */
-/* at Thu Sep 07 00:36:56 2017
+/* at Wed Jan 03 07:03:50 2018
  */
 /* Compiler settings for TransCAD.idl:
     Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 7.00.0555 
@@ -15282,12 +15282,12 @@ EXTERN_C const IID IID_IStdAssemConstraints;
         virtual /* [helpstring][id][propget] */ HRESULT STDMETHODCALLTYPE get_Count( 
             /* [retval][out] */ long *pVal) = 0;
         
-        virtual /* [helpstring][id][propget] */ HRESULT STDMETHODCALLTYPE get_Item( 
+        virtual /* [helpstring][id][propget] */ HRESULT STDMETHODCALLTYPE get_Constraint( 
             /* [in] */ long index,
             /* [retval][out] */ IStdAssemConstraint **ppVal) = 0;
         
-        virtual /* [helpstring][id] */ HRESULT STDMETHODCALLTYPE GetConstraint( 
-            /* [in] */ long index,
+        virtual /* [helpstring][id] */ HRESULT STDMETHODCALLTYPE SelectConstraintByName( 
+            /* [in] */ BSTR name,
             /* [retval][out] */ IStdAssemConstraint **ppVal) = 0;
         
         virtual /* [helpstring][id] */ HRESULT STDMETHODCALLTYPE AddNewAssemblyCoaxialConstraint( 
@@ -15360,14 +15360,14 @@ EXTERN_C const IID IID_IStdAssemConstraints;
             IStdAssemConstraints * This,
             /* [retval][out] */ long *pVal);
         
-        /* [helpstring][id][propget] */ HRESULT ( STDMETHODCALLTYPE *get_Item )( 
+        /* [helpstring][id][propget] */ HRESULT ( STDMETHODCALLTYPE *get_Constraint )( 
             IStdAssemConstraints * This,
             /* [in] */ long index,
             /* [retval][out] */ IStdAssemConstraint **ppVal);
         
-        /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *GetConstraint )( 
+        /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *SelectConstraintByName )( 
             IStdAssemConstraints * This,
-            /* [in] */ long index,
+            /* [in] */ BSTR name,
             /* [retval][out] */ IStdAssemConstraint **ppVal);
         
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *AddNewAssemblyCoaxialConstraint )( 
@@ -15428,11 +15428,11 @@ EXTERN_C const IID IID_IStdAssemConstraints;
 #define IStdAssemConstraints_get_Count(This,pVal)	\
     ( (This)->lpVtbl -> get_Count(This,pVal) ) 
 
-#define IStdAssemConstraints_get_Item(This,index,ppVal)	\
-    ( (This)->lpVtbl -> get_Item(This,index,ppVal) ) 
+#define IStdAssemConstraints_get_Constraint(This,index,ppVal)	\
+    ( (This)->lpVtbl -> get_Constraint(This,index,ppVal) ) 
 
-#define IStdAssemConstraints_GetConstraint(This,index,ppVal)	\
-    ( (This)->lpVtbl -> GetConstraint(This,index,ppVal) ) 
+#define IStdAssemConstraints_SelectConstraintByName(This,name,ppVal)	\
+    ( (This)->lpVtbl -> SelectConstraintByName(This,name,ppVal) ) 
 
 #define IStdAssemConstraints_AddNewAssemblyCoaxialConstraint(This,name,pConstrainedPart,pConstrainedGeometry,pReferencePart,pReferenceGeometry,ppVal)	\
     ( (This)->lpVtbl -> AddNewAssemblyCoaxialConstraint(This,name,pConstrainedPart,pConstrainedGeometry,pReferencePart,pReferenceGeometry,ppVal) ) 

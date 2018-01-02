@@ -1624,8 +1624,6 @@ interface IComp : IDispatch{
 interface IAssem : IDispatch{
 	[id(1), helpstring("CreatePart")] HRESULT CreatePart([out, retval] IPart** ppVal);
 	[id(2), helpstring("Create Component")] HRESULT CreateComponent([out, retval] IComp** ppVal);
-	//[id(3), helpstring("Add Boolean Part")] HRESULT AddBooleanPart( [in] BSTR pVal, [in] IPart* pTool, [in] IPart* pBlank );
-	//[id(4), helpstring("Add Boolean Part 2")] HRESULT AddBooleanPart2( [in] BSTR pVal, [in] IPart* pTool, [in] VARIANT_BOOL type/*true for add; false for cut*/);
 	[id(3), helpstring("Add Comp")] HRESULT AddComponent([in] IComp* pVal);
 	[id(4), helpstring("Get Comp")] HRESULT GetComponent ([in] int index, [out, retval] IComp** ppVal);
 	[id(5), helpstring("Get size")] HRESULT GetSize([out, retval] int * pVal);
@@ -1646,10 +1644,10 @@ interface IAssem : IDispatch{
 ]
 interface IStdAssemConstraints : IDispatch{
 	[propget, id(1), helpstring("Constraint 객체의 수를 리턴합니다.")] HRESULT Count([out, retval] long* pVal);
-	[propget, id(DISPID_VALUE), helpstring("index 번째의 Constraint 객체를 리턴합니다.")] HRESULT Item([in] long index, [out, retval] IStdAssemConstraint** ppVal);
-	[id(2), helpstring("Constraint 객체를 리턴합니다.")] HRESULT GetConstraint([in] long index, [out, retval] IStdAssemConstraint** ppVal);
-	[id(3), helpstring("새로운 AssemblyCoaxial 객체를 만들고, 이를 추가합니다.")] HRESULT AddNewAssemblyCoaxialConstraint( [in]BSTR name, [in] IPart* pConstrainedPart, [in] IReference* pConstrainedGeometry, [in] IPart* pReferencePart, [in] IReference* pReferenceGeometry, [out, retval] IStdAssemConstraintCoaxial** ppVal );
-	[id(4), helpstring("새로운 AssemblyIncidence 객체를 만들고, 이를 추가합니다.")] HRESULT AddNewAssemblyIncidenceConstraint( [in] BSTR name, [in] IPart* pConstrainedPart, [in] IReference* pConstrainedGeometry, [in] IPart* pReferencePart, [in] IReference* pReferenceGeometry, [in] StdAssemblyIncidenceType incidenceType, [out, retval] IStdAssemConstraintIncidence** ppVal );
+	[propget, id(2), helpstring("index 번째의 Constraint 객체를 리턴합니다.")] HRESULT Constraint([in] long index, [out, retval] IStdAssemConstraint** ppVal);
+	[id(3), helpstring("Select constraint by name")] HRESULT SelectConstraintByName([in] BSTR name, [out, retval] IStdAssemConstraint** ppVal);
+	[id(4), helpstring("새로운 CoaxialConstraint 객체를 만들고, 이를 추가합니다.")] HRESULT AddNewAssemblyCoaxialConstraint( [in]BSTR name, [in] IPart* pConstrainedPart, [in] IReference* pConstrainedGeometry, [in] IPart* pReferencePart, [in] IReference* pReferenceGeometry, [out, retval] IStdAssemConstraintCoaxial** ppVal );
+	[id(5), helpstring("새로운 IncidenceConstraint 객체를 만들고, 이를 추가합니다.")] HRESULT AddNewAssemblyIncidenceConstraint( [in] BSTR name, [in] IPart* pConstrainedPart, [in] IReference* pConstrainedGeometry, [in] IPart* pReferencePart, [in] IReference* pReferenceGeometry, [in] StdAssemblyIncidenceType incidenceType, [out, retval] IStdAssemConstraintIncidence** ppVal );
 	
 };
 

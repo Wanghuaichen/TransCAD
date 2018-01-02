@@ -101,42 +101,42 @@ STDMETHODIMP CAssemAuto::CreateComponent(IComp** ppVal)
  	return hr;
 }
 
-STDMETHODIMP CAssemAuto::AddBooleanPart(BSTR pVal, IPart* pTool,IPart* pBlank)
-{
-	AFX_MANAGE_STATE(AfxGetAppModuleState());
-
-	CPartAuto * pToolAuto = static_cast<CPartAuto *>(pTool);
-	if(!pToolAuto)
-		return E_INVALIDARG;
-
-	CPartAuto * pBlankAuto = static_cast<CPartAuto *>(pBlank);
-	if(!pToolAuto)
-		return E_INVALIDARG;
-
-
-	PmeHPart hTool = pToolAuto->GetHPart();
-	PmeHPart hBlank = pBlankAuto->GetHPart();
-
-	PmeAssemblyBooleanAPI::Create(m_hAssem, (CString)pVal, hTool, hBlank);	
-
-	return S_OK;
-}
-
-STDMETHODIMP CAssemAuto::AddBooleanPart2(BSTR pVal, IPart* pTool, VARIANT_BOOL type)
-{
-	AFX_MANAGE_STATE(AfxGetAppModuleState());
-
-	CPartAuto * pToolAuto = static_cast<CPartAuto *>(pTool);
-	if(!pToolAuto)
-		return E_INVALIDARG;
-
-
-	PmeHPart hTool = pToolAuto->GetHPart();
-
-	PmeAssemblyBooleanAPI::Create(m_hAssem, (CString)pVal, hTool, type);	
-
-	return S_OK;
-}
+//STDMETHODIMP CAssemAuto::AddBooleanPart(BSTR pVal, IPart* pTool,IPart* pBlank)
+//{
+//	AFX_MANAGE_STATE(AfxGetAppModuleState());
+//
+//	CPartAuto * pToolAuto = static_cast<CPartAuto *>(pTool);
+//	if(!pToolAuto)
+//		return E_INVALIDARG;
+//
+//	CPartAuto * pBlankAuto = static_cast<CPartAuto *>(pBlank);
+//	if(!pToolAuto)
+//		return E_INVALIDARG;
+//
+//
+//	PmeHPart hTool = pToolAuto->GetHPart();
+//	PmeHPart hBlank = pBlankAuto->GetHPart();
+//
+//	PmeAssemblyBooleanAPI::Create(m_hAssem, (CString)pVal, hTool, hBlank);	
+//
+//	return S_OK;
+//}
+//
+//STDMETHODIMP CAssemAuto::AddBooleanPart2(BSTR pVal, IPart* pTool, VARIANT_BOOL type)
+//{
+//	AFX_MANAGE_STATE(AfxGetAppModuleState());
+//
+//	CPartAuto * pToolAuto = static_cast<CPartAuto *>(pTool);
+//	if(!pToolAuto)
+//		return E_INVALIDARG;
+//
+//
+//	PmeHPart hTool = pToolAuto->GetHPart();
+//
+//	PmeAssemblyBooleanAPI::Create(m_hAssem, (CString)pVal, hTool, type);	
+//
+//	return S_OK;
+//}
 
 STDMETHODIMP CAssemAuto::AddComponent(/*PmeHComponent& hItem,*/ IComp* pVal)
 {

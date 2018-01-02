@@ -2,6 +2,7 @@
 
 #include ".\PmeObject.h"
 #include ".\PmeBaseList.h"
+#include ".\PmeStdAssemblyConstraintType.h"
 
 class PmeStdAssemblyConstraint;
 
@@ -17,6 +18,5 @@ public:
 	virtual ~PmeStdAssemblyConstraints(void);
 	
 	void Add( PmeStdAssemblyConstraint * item );
-
 	PmeStdAssemblyConstraint * FindByName(const CString & name) const;
 };

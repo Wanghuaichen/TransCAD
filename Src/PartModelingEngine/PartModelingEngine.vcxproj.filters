@@ -40,14 +40,8 @@
     <Filter Include="Part\Feature\API">
       <UniqueIdentifier>{74880ee4-0ea7-4dfa-af4e-9927e7c9bebe}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Assembly\API">
-      <UniqueIdentifier>{d26c4e85-f041-433b-9435-aa885544ec54}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Part\API">
       <UniqueIdentifier>{17e7959a-f3c1-4ef9-a6cc-7c3c386f6800}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Assembly\StdAssemblyConstraint">
-      <UniqueIdentifier>{b1b69a57-af17-418b-8e74-7a6ef4185609}</UniqueIdentifier>
     </Filter>
     <Filter Include="Part\Feature\API\API %28Datum%29">
       <UniqueIdentifier>{41531594-e3b1-44cd-8876-5e94967be762}</UniqueIdentifier>
@@ -112,8 +106,20 @@
     <Filter Include="Part\Feature\StdFeature\StdFeature %28Brep%29">
       <UniqueIdentifier>{a11ca47c-ed29-431d-921a-4b489ab99b7a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Assembly\API\StdAssemblyConstraintAPI">
+    <Filter Include="Assembly\AssemblyConstraint">
+      <UniqueIdentifier>{b1b69a57-af17-418b-8e74-7a6ef4185609}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assembly\AssemblyConstraint\StdAssemConstraint">
+      <UniqueIdentifier>{20a5e170-a99e-41c2-8db5-eaf1f2b3d68d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assembly\AssemblyConstraint\StdAssemConstraint\StdAssemblyConstraintAPI">
       <UniqueIdentifier>{a163cb88-7b26-4b06-960c-3c3bc5e2c640}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assembly\AssemDocAPI">
+      <UniqueIdentifier>{d26c4e85-f041-433b-9435-aa885544ec54}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assembly\AssemblyConstraint\AssemblyConstraintAPI">
+      <UniqueIdentifier>{f42fbc36-b133-453f-924d-081de2d790f8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -310,16 +316,16 @@
       <Filter>Assembly</Filter>
     </ClCompile>
     <ClCompile Include="PmeAssemblyAPI.cpp">
-      <Filter>Assembly\API</Filter>
+      <Filter>Assembly\AssemDocAPI</Filter>
     </ClCompile>
     <ClCompile Include="PmeAssemblyBooleanAPI.cpp">
-      <Filter>Assembly\API</Filter>
+      <Filter>Assembly\AssemDocAPI</Filter>
     </ClCompile>
     <ClCompile Include="PmeComponentAPI.cpp">
-      <Filter>Assembly\API</Filter>
+      <Filter>Assembly\AssemDocAPI</Filter>
     </ClCompile>
     <ClCompile Include="PmeTransformAPI.cpp">
-      <Filter>Assembly\API</Filter>
+      <Filter>Assembly\AssemDocAPI</Filter>
     </ClCompile>
     <ClCompile Include="PmePartAPI.cpp">
       <Filter>Part\API</Filter>
@@ -409,25 +415,7 @@
       <Filter>Part\Feature\StdFeature\StdFeature %28Sketch-based%29</Filter>
     </ClCompile>
     <ClCompile Include="PmeStdAssemblyConstraint.cpp">
-      <Filter>Assembly\StdAssemblyConstraint</Filter>
-    </ClCompile>
-    <ClCompile Include="PmeStdAssemblyCoaxial.cpp">
-      <Filter>Assembly\StdAssemblyConstraint</Filter>
-    </ClCompile>
-    <ClCompile Include="PmeStdAssemblyParallel.cpp">
-      <Filter>Assembly\StdAssemblyConstraint</Filter>
-    </ClCompile>
-    <ClCompile Include="PmeStdAssemblyPerpendicular.cpp">
-      <Filter>Assembly\StdAssemblyConstraint</Filter>
-    </ClCompile>
-    <ClCompile Include="PmeStdAssemblyDistance.cpp">
-      <Filter>Assembly\StdAssemblyConstraint</Filter>
-    </ClCompile>
-    <ClCompile Include="PmeStdAssemblyAngle.cpp">
-      <Filter>Assembly\StdAssemblyConstraint</Filter>
-    </ClCompile>
-    <ClCompile Include="PmeStdAssemblyConstraints.cpp">
-      <Filter>Assembly</Filter>
+      <Filter>Assembly\AssemblyConstraint</Filter>
     </ClCompile>
     <ClCompile Include="PmeStdSketchCenterlineAPI.cpp">
       <Filter>Part\Feature\API\API %28Sketch%29</Filter>
@@ -627,32 +615,50 @@
     <ClCompile Include="PmeFeatureTagMarker.cpp">
       <Filter>Utility</Filter>
     </ClCompile>
-    <ClCompile Include="PmeStdAssemblyIncidence.cpp">
-      <Filter>Assembly\StdAssemblyConstraint</Filter>
-    </ClCompile>
     <ClCompile Include="PmeStdAssemblyAngleAPI.cpp">
-      <Filter>Assembly\API\StdAssemblyConstraintAPI</Filter>
+      <Filter>Assembly\AssemblyConstraint\StdAssemConstraint\StdAssemblyConstraintAPI</Filter>
     </ClCompile>
     <ClCompile Include="PmeStdAssemblyCoaxialAPI.cpp">
-      <Filter>Assembly\API\StdAssemblyConstraintAPI</Filter>
+      <Filter>Assembly\AssemblyConstraint\StdAssemConstraint\StdAssemblyConstraintAPI</Filter>
     </ClCompile>
     <ClCompile Include="PmeStdAssemblyDistanceAPI.cpp">
-      <Filter>Assembly\API\StdAssemblyConstraintAPI</Filter>
+      <Filter>Assembly\AssemblyConstraint\StdAssemConstraint\StdAssemblyConstraintAPI</Filter>
     </ClCompile>
     <ClCompile Include="PmeStdAssemblyIncidenceAPI.cpp">
-      <Filter>Assembly\API\StdAssemblyConstraintAPI</Filter>
+      <Filter>Assembly\AssemblyConstraint\StdAssemConstraint\StdAssemblyConstraintAPI</Filter>
     </ClCompile>
     <ClCompile Include="PmeStdAssemblyParallelAPI.cpp">
-      <Filter>Assembly\API\StdAssemblyConstraintAPI</Filter>
+      <Filter>Assembly\AssemblyConstraint\StdAssemConstraint\StdAssemblyConstraintAPI</Filter>
     </ClCompile>
     <ClCompile Include="PmeStdAssemblyPerpendicularAPI.cpp">
-      <Filter>Assembly\API\StdAssemblyConstraintAPI</Filter>
+      <Filter>Assembly\AssemblyConstraint\StdAssemConstraint\StdAssemblyConstraintAPI</Filter>
+    </ClCompile>
+    <ClCompile Include="PmeStdAssemblyConstraints.cpp">
+      <Filter>Assembly\AssemblyConstraint</Filter>
+    </ClCompile>
+    <ClCompile Include="PmeStdAssemblyAngle.cpp">
+      <Filter>Assembly\AssemblyConstraint\StdAssemConstraint</Filter>
+    </ClCompile>
+    <ClCompile Include="PmeStdAssemblyCoaxial.cpp">
+      <Filter>Assembly\AssemblyConstraint\StdAssemConstraint</Filter>
+    </ClCompile>
+    <ClCompile Include="PmeStdAssemblyDistance.cpp">
+      <Filter>Assembly\AssemblyConstraint\StdAssemConstraint</Filter>
+    </ClCompile>
+    <ClCompile Include="PmeStdAssemblyIncidence.cpp">
+      <Filter>Assembly\AssemblyConstraint\StdAssemConstraint</Filter>
+    </ClCompile>
+    <ClCompile Include="PmeStdAssemblyParallel.cpp">
+      <Filter>Assembly\AssemblyConstraint\StdAssemConstraint</Filter>
+    </ClCompile>
+    <ClCompile Include="PmeStdAssemblyPerpendicular.cpp">
+      <Filter>Assembly\AssemblyConstraint\StdAssemConstraint</Filter>
     </ClCompile>
     <ClCompile Include="PmeStdAssemblyConstraintAPI.cpp">
-      <Filter>Assembly\API\StdAssemblyConstraintAPI</Filter>
+      <Filter>Assembly\AssemblyConstraint\AssemblyConstraintAPI</Filter>
     </ClCompile>
     <ClCompile Include="PmeStdAssemblyConstraintsAPI.cpp">
-      <Filter>Assembly\API\StdAssemblyConstraintAPI</Filter>
+      <Filter>Assembly\AssemblyConstraint\AssemblyConstraintAPI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -906,16 +912,16 @@
       <Filter>Assembly</Filter>
     </ClInclude>
     <ClInclude Include="PmeAssemblyAPI.h">
-      <Filter>Assembly\API</Filter>
+      <Filter>Assembly\AssemDocAPI</Filter>
     </ClInclude>
     <ClInclude Include="PmeAssemblyBooleanAPI.h">
-      <Filter>Assembly\API</Filter>
+      <Filter>Assembly\AssemDocAPI</Filter>
     </ClInclude>
     <ClInclude Include="PmeComponentAPI.h">
-      <Filter>Assembly\API</Filter>
+      <Filter>Assembly\AssemDocAPI</Filter>
     </ClInclude>
     <ClInclude Include="PmeTransformAPI.h">
-      <Filter>Assembly\API</Filter>
+      <Filter>Assembly\AssemDocAPI</Filter>
     </ClInclude>
     <ClInclude Include="PmePartAPI.h">
       <Filter>Part\API</Filter>
@@ -1026,28 +1032,10 @@
       <Filter>Part\Feature\StdFeature\StdFeature %28Sketch-based%29</Filter>
     </ClInclude>
     <ClInclude Include="PmeStdAssemblyConstraint.h">
-      <Filter>Assembly\StdAssemblyConstraint</Filter>
-    </ClInclude>
-    <ClInclude Include="PmeStdAssemblyCoaxial.h">
-      <Filter>Assembly\StdAssemblyConstraint</Filter>
-    </ClInclude>
-    <ClInclude Include="PmeStdAssemblyParallel.h">
-      <Filter>Assembly\StdAssemblyConstraint</Filter>
-    </ClInclude>
-    <ClInclude Include="PmeStdAssemblyPerpendicular.h">
-      <Filter>Assembly\StdAssemblyConstraint</Filter>
+      <Filter>Assembly\AssemblyConstraint</Filter>
     </ClInclude>
     <ClInclude Include="PmeStdAssemblyConstraintType.h">
-      <Filter>Assembly\StdAssemblyConstraint</Filter>
-    </ClInclude>
-    <ClInclude Include="PmeStdAssemblyDistance.h">
-      <Filter>Assembly\StdAssemblyConstraint</Filter>
-    </ClInclude>
-    <ClInclude Include="PmeStdAssemblyAngle.h">
-      <Filter>Assembly\StdAssemblyConstraint</Filter>
-    </ClInclude>
-    <ClInclude Include="PmeStdAssemblyConstraints.h">
-      <Filter>Assembly</Filter>
+      <Filter>Assembly\AssemblyConstraint</Filter>
     </ClInclude>
     <ClInclude Include="PmeStdSketchVerticalAPI.h">
       <Filter>Part\Feature\API\API %28Sketch%29</Filter>
@@ -1271,32 +1259,50 @@
     <ClInclude Include="PmeFeatureTagMarker.h">
       <Filter>Utility</Filter>
     </ClInclude>
-    <ClInclude Include="PmeStdAssemblyIncidence.h">
-      <Filter>Assembly\StdAssemblyConstraint</Filter>
-    </ClInclude>
     <ClInclude Include="PmeStdAssemblyPerpendicularAPI.h">
-      <Filter>Assembly\API\StdAssemblyConstraintAPI</Filter>
+      <Filter>Assembly\AssemblyConstraint\StdAssemConstraint\StdAssemblyConstraintAPI</Filter>
     </ClInclude>
     <ClInclude Include="PmeStdAssemblyAngleAPI.h">
-      <Filter>Assembly\API\StdAssemblyConstraintAPI</Filter>
+      <Filter>Assembly\AssemblyConstraint\StdAssemConstraint\StdAssemblyConstraintAPI</Filter>
     </ClInclude>
     <ClInclude Include="PmeStdAssemblyCoaxialAPI.h">
-      <Filter>Assembly\API\StdAssemblyConstraintAPI</Filter>
+      <Filter>Assembly\AssemblyConstraint\StdAssemConstraint\StdAssemblyConstraintAPI</Filter>
     </ClInclude>
     <ClInclude Include="PmeStdAssemblyDistanceAPI.h">
-      <Filter>Assembly\API\StdAssemblyConstraintAPI</Filter>
+      <Filter>Assembly\AssemblyConstraint\StdAssemConstraint\StdAssemblyConstraintAPI</Filter>
     </ClInclude>
     <ClInclude Include="PmeStdAssemblyIncidenceAPI.h">
-      <Filter>Assembly\API\StdAssemblyConstraintAPI</Filter>
+      <Filter>Assembly\AssemblyConstraint\StdAssemConstraint\StdAssemblyConstraintAPI</Filter>
     </ClInclude>
     <ClInclude Include="PmeStdAssemblyParallelAPI.h">
-      <Filter>Assembly\API\StdAssemblyConstraintAPI</Filter>
+      <Filter>Assembly\AssemblyConstraint\StdAssemConstraint\StdAssemblyConstraintAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="PmeStdAssemblyConstraints.h">
+      <Filter>Assembly\AssemblyConstraint</Filter>
+    </ClInclude>
+    <ClInclude Include="PmeStdAssemblyAngle.h">
+      <Filter>Assembly\AssemblyConstraint\StdAssemConstraint</Filter>
+    </ClInclude>
+    <ClInclude Include="PmeStdAssemblyCoaxial.h">
+      <Filter>Assembly\AssemblyConstraint\StdAssemConstraint</Filter>
+    </ClInclude>
+    <ClInclude Include="PmeStdAssemblyDistance.h">
+      <Filter>Assembly\AssemblyConstraint\StdAssemConstraint</Filter>
+    </ClInclude>
+    <ClInclude Include="PmeStdAssemblyIncidence.h">
+      <Filter>Assembly\AssemblyConstraint\StdAssemConstraint</Filter>
+    </ClInclude>
+    <ClInclude Include="PmeStdAssemblyParallel.h">
+      <Filter>Assembly\AssemblyConstraint\StdAssemConstraint</Filter>
+    </ClInclude>
+    <ClInclude Include="PmeStdAssemblyPerpendicular.h">
+      <Filter>Assembly\AssemblyConstraint\StdAssemConstraint</Filter>
     </ClInclude>
     <ClInclude Include="PmeStdAssemblyConstraintAPI.h">
-      <Filter>Assembly\API\StdAssemblyConstraintAPI</Filter>
+      <Filter>Assembly\AssemblyConstraint\AssemblyConstraintAPI</Filter>
     </ClInclude>
     <ClInclude Include="PmeStdAssemblyConstraintsAPI.h">
-      <Filter>Assembly\API\StdAssemblyConstraintAPI</Filter>
+      <Filter>Assembly\AssemblyConstraint\AssemblyConstraintAPI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

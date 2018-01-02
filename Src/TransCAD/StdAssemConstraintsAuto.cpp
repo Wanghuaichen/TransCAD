@@ -51,7 +51,7 @@ STDMETHODIMP CStdAssemConstraintsAuto::get_Count( long* pVal )
 	return S_OK;
 }
 
-STDMETHODIMP CStdAssemConstraintsAuto::GetConstraint( long index, IStdAssemConstraint** ppVal )
+STDMETHODIMP CStdAssemConstraintsAuto::get_Constraint( long index, IStdAssemConstraint** ppVal )
 {
 	AFX_MANAGE_STATE( AfxGetAppModuleState() );
 
@@ -66,17 +66,19 @@ STDMETHODIMP CStdAssemConstraintsAuto::GetConstraint( long index, IStdAssemConst
 	return hr;
 }
 
-STDMETHODIMP CStdAssemConstraintsAuto::get_Item( long index, IStdAssemConstraint** ppVal )
+STDMETHODIMP CStdAssemConstraintsAuto::SelectConstraintByName(BSTR name, IStdAssemConstraint** ppVal)
 {
-	AFX_MANAGE_STATE( AfxGetAppModuleState() );
+	AFX_MANAGE_STATE(AfxGetAppModuleState());
 
+	CString strName(name);
 	PmeHStdAssemblyConstraints hStdAssemblyConstraints;
-	PmeAssemblyAPI::GetConstraints( m_hAssembly, hStdAssemblyConstraints );
+	PmeAssemblyAPI::GetConstraints(m_hAssembly, hStdAssemblyConstraints);
 
 	PmeHStdAssemblyConstraint hStdAssemblyConstraint;
-	PmeStdAssemblyConstraintsAPI::GetItem( hStdAssemblyConstraints, (int)index - 1, hStdAssemblyConstraint );
 
-	HRESULT hr = GetIStdAssemConstraintFromHStdAssemConstraint( hStdAssemblyConstraint, ppVal );
+	PmeStdAssemblyConstraintsAPI::FindByName(hStdAssemblyConstraints, strName, hStdAssemblyConstraint);
+	
+	HRESULT hr = GetIStdAssemConstraintFromHStdAssemConstraint(hStdAssemblyConstraint, ppVal);
 
 	return hr;
 }

@@ -62,8 +62,8 @@ public:
 	STDMETHOD(GetComponent)(int index, IComp** ppVal);
 	STDMETHOD(GetSize)(/*PmeHComponent hItem,*/ int * pVal);
 
-	STDMETHOD(AddBooleanPart)(BSTR pVal,IPart* pTool,IPart* pBlank);
-	STDMETHOD(AddBooleanPart2)(BSTR pVal,IPart* pTool, VARIANT_BOOL type);
+	//STDMETHOD(AddBooleanPart)(BSTR pVal,IPart* pTool,IPart* pBlank);
+	//STDMETHOD(AddBooleanPart2)(BSTR pVal,IPart* pTool, VARIANT_BOOL type);
 	STDMETHOD(AddComponent)(/*PmeHComponent& hItem,*/ IComp* pVal);
 
 	STDMETHOD(get_Constraints)( IStdAssemConstraints** ppVal );
