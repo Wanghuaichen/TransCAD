@@ -1,3 +1,19 @@
+<< TransCAD 6.1.2 change log >>
+Release data: 2018-01-03
+1. 수정
+- AutomationAPI
+	* Assem
+		1) 함수 이름 변경
+		: Item -> Constraint
+		: 함수 이름을 더욱 직관적으로 변경
+
+2. 추가
+- AutomationAPI
+	* StdAssemblyConstraints
+		1) SelectConstraintByName
+		: Constraint의 이름을 이용하여 Constraints에서 해당
+		  constraint를 찾기
+
 << TRansCAD 6.1.1 change log >>
 Release date: 2017-09-06
 1. 수정
