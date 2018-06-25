@@ -4,7 +4,7 @@
 
 
  /* File created by MIDL compiler version 7.00.0555 */
-/* at Wed Jan 03 07:03:50 2018
+/* at Tue Jun 26 01:31:24 2018
  */
 /* Compiler settings for TransCAD.idl:
     Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 7.00.0555 
@@ -2488,6 +2488,17 @@ EXTERN_C const IID IID_IPart;
         virtual /* [helpstring][id][propget] */ HRESULT STDMETHODCALLTYPE get_Solid( 
             /* [retval][out] */ ISolid **ppVal) = 0;
         
+        virtual /* [helpstring][id] */ HRESULT STDMETHODCALLTYPE GetPlacement( 
+            /* [out] */ double *ox,
+            /* [out] */ double *oy,
+            /* [out] */ double *oz,
+            /* [out] */ double *xx,
+            /* [out] */ double *xy,
+            /* [out] */ double *xz,
+            /* [out] */ double *yx,
+            /* [out] */ double *yy,
+            /* [out] */ double *yz) = 0;
+        
     };
     
 #else 	/* C style interface */
@@ -2634,6 +2645,18 @@ EXTERN_C const IID IID_IPart;
             IPart * This,
             /* [retval][out] */ ISolid **ppVal);
         
+        /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *GetPlacement )( 
+            IPart * This,
+            /* [out] */ double *ox,
+            /* [out] */ double *oy,
+            /* [out] */ double *oz,
+            /* [out] */ double *xx,
+            /* [out] */ double *xy,
+            /* [out] */ double *xz,
+            /* [out] */ double *yx,
+            /* [out] */ double *yy,
+            /* [out] */ double *yz);
+        
         END_INTERFACE
     } IPartVtbl;
 
@@ -2723,6 +2746,9 @@ EXTERN_C const IID IID_IPart;
 
 #define IPart_get_Solid(This,ppVal)	\
     ( (This)->lpVtbl -> get_Solid(This,ppVal) ) 
+
+#define IPart_GetPlacement(This,ox,oy,oz,xx,xy,xz,yx,yy,yz)	\
+    ( (This)->lpVtbl -> GetPlacement(This,ox,oy,oz,xx,xy,xz,yx,yy,yz) ) 
 
 #endif /* COBJMACROS */
 

@@ -91,6 +91,8 @@ void PmeAssemblyAPI::UpdateAll( PmeHAssembly hAssembly )
 
 	PmeAssemblyAPI::FireComponentsUpdatedEvent(hAssembly, hUpdatedComponents);
 	PmeUpdateInfoAPI::Delete(hUpdatedComponents);
+
+	//int nConstraintSize = pAssembly->GetConstraints().size();
 }
 
 // Add functions

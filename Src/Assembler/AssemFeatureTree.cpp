@@ -49,6 +49,10 @@ void AssemFeatureTree::Initialize(void)
 	CTreeCtrl & tree = GetTreeCtrl();
 	tree.DeleteAllItems();
 	tree.InsertItem(TVIF_TEXT | TVIF_PARAM, _T("Assembly"), -1, -1, -1, -1, (LPARAM)GetDocument()->GetAssembly(), TVI_ROOT, TVI_LAST);
+	
+	// 임시방편 constraints 트리 추가
+	tree.InsertItem(TVIF_TEXT | TVIF_PARAM, _T("Constraints"), -1, -1, -1, -1, (LPARAM)GetDocument()->GetAssembly(), TVI_ROOT, TVI_LAST);
+	
 }
 
 AssemDocument * AssemFeatureTree::GetDocument() const
@@ -56,6 +60,114 @@ AssemDocument * AssemFeatureTree::GetDocument() const
 	AssemDocument * pDoc = static_cast<AssemDocument *>(GetParentFrame()->GetActiveDocument());
 
 	return pDoc;
+}
+
+
+// Part
+void AssemFeatureTree::AddPart( PmeUpdateInfoItem item )
+{
+	PmeHPart hPart = item.hItem;
+
+	CString name, parentName;
+	PmePartAPI::GetName( hPart, name );
+	PmePartAPI::GetParentName( hPart, parentName );
+
+	CTreeCtrl & treeCtrl = GetTreeCtrl();
+
+	HTREEITEM hCompTree = FindComponentTreeNodeByName( parentName );	// 파트가 들어갈 컴포넌트 노드를 찾는 함수
+	
+	PmeHComponent hComponent = (PmeHComponent)treeCtrl.GetItemData( hCompTree );
+
+#ifdef _DEBUG
+	CString compName;
+	PmeComponentAPI::GetName( hComponent, compName );
+#endif
+	HTREEITEM hNode = treeCtrl.InsertItem( TVIF_TEXT | TVIF_PARAM, name, -1, -1, -1, -1, (LPARAM)hPart, m_CompTreeMap[hComponent], TVI_LAST );
+
+	AddFeatures( hPart, hNode );
+
+	treeCtrl.Expand( m_CompTreeMap[ hComponent ], TVE_EXPAND );
+
+	m_TreeCompMap[hNode] = hComponent;
+
+
+	/*PmeHComponent hItem = item.hItem;
+	
+	int size;
+	PmeComponentAPI::GetPartSize( hItem, size );
+
+	if ( size == 0 )
+		return;
+
+	else
+	{
+		for ( int i = 0; i < size; ++i )
+		{
+			PmeHPart hPart = 0;
+			PmeComponentAPI::GetItem( hItem, i, hPart );
+
+			CString name;
+			PmePartAPI::GetName( hPart, name );
+
+			CTreeCtrl & treeCtrl = GetTreeCtrl();
+
+			HTREEITEM hNode = treeCtrl.InsertItem( TVIF_TEXT | TVIF_PARAM, name, -1, -1, -1, -1, (LPARAM)hPart, m_CompTreeMap[hItem], TVI_LAST );
+
+			AddFeatures( hPart, hNode );
+
+			treeCtrl.Expand( m_CompTreeMap[ hItem ], TVE_EXPAND );
+
+			m_TreeCompMap[hNode] = hItem;
+		}
+		
+	}*/
+}
+
+void AssemFeatureTree::UpdatePart( PmeUpdateInfoItem item )
+{
+	CTreeCtrl & treeCtrl = GetTreeCtrl();
+	HTREEITEM hRootNode = treeCtrl.GetRootItem();
+
+	PmeHPart hPart = item.hItem;
+
+	CString parentName;
+	PmePartAPI::GetParentName( hPart, parentName );
+
+	HTREEITEM hNode = FindPartTreeNode( hRootNode, parentName, hPart );
+			
+	if ( hNode == NULL )
+	{
+		AddPart( item );
+	}
+	/*PmeHComponent hItem = item.hItem;
+	
+	int size;
+	PmeComponentAPI::GetPartSize( hItem, size );
+
+	for ( int i = 0; i < size; ++i )
+	{
+		BOOL result;
+		PmeComponentAPI::IsPart( hItem, i, result );
+
+		if ( result )
+		{
+			CTreeCtrl & treeCtrl = GetTreeCtrl();
+			HTREEITEM hRootNode = treeCtrl.GetRootItem();
+
+			CString compName;
+			PmeComponentAPI::GetName( hItem, compName );
+
+			PmeHPart hPart = 0;
+			PmeComponentAPI::GetPart( hItem, i, hPart );
+
+			HTREEITEM hNode = FindPartTreeNode( hRootNode, compName, hPart );
+			
+			if ( hNode == NULL )
+			{
+				AddPart( item );
+			}
+		}
+	}*/
 }
 
 void AssemFeatureTree::OnPartUpdated( PmeHUpdateInfo hInfo )
@@ -84,36 +196,8 @@ void AssemFeatureTree::OnPartUpdated( PmeHUpdateInfo hInfo )
 	}
 }
 
-void AssemFeatureTree::OnComponentUpdated( PmeHUpdateInfo hInfo )
-{
-	TRACE(_T("OnComponentUpdated\n"));
 
-	int size;
-	PmeUpdateInfoAPI::GetSize( hInfo, size );
-	
-	for(int i = 0; i < size; ++ i)
-	{
-		PmeUpdateInfoItem item;
-		PmeUpdateInfoAPI::GetItem(hInfo, i, item);
-		
-		switch(item.state)
-		{
-		case PmeUpdateState_Add:
-			AddComponent( item );
-			break;
-		case PmeUpdateState_Update:
-			UpdateComponent ( item );
-			break;
-		case PmeUpdateState_Delete:
-			break;
-		}
-	}
-
-	//OnPartUpdated( hInfo );
-}
-
-
-
+// Component
 void AssemFeatureTree::AddComponent( PmeUpdateInfoItem item )
 {
 	PmeHComponent hItem = item.hItem;
@@ -227,111 +311,45 @@ void AssemFeatureTree::UpdateComponent( PmeUpdateInfoItem item )
 	treeCtrl.Expand( treeCtrl.GetRootItem(), TVE_EXPAND );
 }
 
-void AssemFeatureTree::AddPart( PmeUpdateInfoItem item )
+void AssemFeatureTree::OnComponentUpdated( PmeHUpdateInfo hInfo )
 {
-	PmeHPart hPart = item.hItem;
+	TRACE(_T("OnComponentUpdated\n"));
 
-	CString name, parentName;
-	PmePartAPI::GetName( hPart, name );
-	PmePartAPI::GetParentName( hPart, parentName );
-
-	CTreeCtrl & treeCtrl = GetTreeCtrl();
-
-	HTREEITEM hCompTree = FindComponentTreeNodeByName( parentName );	// 파트가 들어갈 컴포넌트 노드를 찾는 함수
-	
-	PmeHComponent hComponent = (PmeHComponent)treeCtrl.GetItemData( hCompTree );
-
-#ifdef _DEBUG
-	CString compName;
-	PmeComponentAPI::GetName( hComponent, compName );
-#endif
-	HTREEITEM hNode = treeCtrl.InsertItem( TVIF_TEXT | TVIF_PARAM, name, -1, -1, -1, -1, (LPARAM)hPart, m_CompTreeMap[hComponent], TVI_LAST );
-
-	AddFeatures( hPart, hNode );
-
-	treeCtrl.Expand( m_CompTreeMap[ hComponent ], TVE_EXPAND );
-
-	m_TreeCompMap[hNode] = hComponent;
-
-
-	/*PmeHComponent hItem = item.hItem;
-	
 	int size;
-	PmeComponentAPI::GetPartSize( hItem, size );
-
-	if ( size == 0 )
-		return;
-
-	else
+	PmeUpdateInfoAPI::GetSize( hInfo, size );
+	
+	for(int i = 0; i < size; ++ i)
 	{
-		for ( int i = 0; i < size; ++i )
-		{
-			PmeHPart hPart = 0;
-			PmeComponentAPI::GetItem( hItem, i, hPart );
-
-			CString name;
-			PmePartAPI::GetName( hPart, name );
-
-			CTreeCtrl & treeCtrl = GetTreeCtrl();
-
-			HTREEITEM hNode = treeCtrl.InsertItem( TVIF_TEXT | TVIF_PARAM, name, -1, -1, -1, -1, (LPARAM)hPart, m_CompTreeMap[hItem], TVI_LAST );
-
-			AddFeatures( hPart, hNode );
-
-			treeCtrl.Expand( m_CompTreeMap[ hItem ], TVE_EXPAND );
-
-			m_TreeCompMap[hNode] = hItem;
-		}
+		PmeUpdateInfoItem item;
+		PmeUpdateInfoAPI::GetItem(hInfo, i, item);
 		
-	}*/
+		switch(item.state)
+		{
+		case PmeUpdateState_Add:
+			AddComponent( item );
+			break;
+		case PmeUpdateState_Update:
+			UpdateComponent ( item );
+			break;
+		case PmeUpdateState_Delete:
+			break;
+		}
+	}
+
+	//OnPartUpdated( hInfo );
 }
 
-void AssemFeatureTree::UpdatePart( PmeUpdateInfoItem item )
+
+// Constraints
+void AssemFeatureTree::AddConstraints( PmeUpdateInfoItem item)
 {
 	CTreeCtrl & treeCtrl = GetTreeCtrl();
-	HTREEITEM hRootNode = treeCtrl.GetRootItem();
-
-	PmeHPart hPart = item.hItem;
-
-	CString parentName;
-	PmePartAPI::GetParentName( hPart, parentName );
-
-	HTREEITEM hNode = FindPartTreeNode( hRootNode, parentName, hPart );
-			
-	if ( hNode == NULL )
-	{
-		AddPart( item );
-	}
-	/*PmeHComponent hItem = item.hItem;
-	
-	int size;
-	PmeComponentAPI::GetPartSize( hItem, size );
-
-	for ( int i = 0; i < size; ++i )
-	{
-		BOOL result;
-		PmeComponentAPI::IsPart( hItem, i, result );
-
-		if ( result )
-		{
-			CTreeCtrl & treeCtrl = GetTreeCtrl();
-			HTREEITEM hRootNode = treeCtrl.GetRootItem();
-
-			CString compName;
-			PmeComponentAPI::GetName( hItem, compName );
-
-			PmeHPart hPart = 0;
-			PmeComponentAPI::GetPart( hItem, i, hPart );
-
-			HTREEITEM hNode = FindPartTreeNode( hRootNode, compName, hPart );
-			
-			if ( hNode == NULL )
-			{
-				AddPart( item );
-			}
-		}
-	}*/
+	treeCtrl.InsertItem("Constraints", treeCtrl.GetRootItem(), TVI_LAST);
 }
+
+
+
+
 
 void AssemFeatureTree::SelectComponent(PmeHComponent hComponent)
 {
@@ -487,8 +505,6 @@ void AssemFeatureTree::OnLButtonDown(UINT nFlags, CPoint point)
 	//__super::OnLButtonDown(nFlags, point);
 }
 
-
-
 void AssemFeatureTree::OnRButtonDown(UINT nFlags, CPoint point)
 {
 	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
@@ -531,7 +547,6 @@ void AssemFeatureTree::OnRButtonDown(UINT nFlags, CPoint point)
 	//__super::OnRButtonDown(nFlags, point);
 }
 
-
 void AssemFeatureTree::OnPopupDel()
 {
 	
@@ -542,14 +557,12 @@ void AssemFeatureTree::OnPopupDel()
 	PmeAssemblyAPI::DeleteComponent(hAssembly,GetDocument()->GetSelectedcomp());*/
 }
 
-
 void AssemFeatureTree::OnUpdatePopupDel(CCmdUI *pCmdUI)
 {
 	
 	//pCmdUI->SetCheck(1);
 	// TODO: 여기에 명령 업데이트 UI 처리기 코드를 추가합니다.
 }
-
 
 void AssemFeatureTree::AddFeatures(PmeHPart hPart, HTREEITEM hParentNode)
 {

@@ -39,9 +39,13 @@ private:
 	void AddFeatures(PmeHPart hPart, HTREEITEM hParentNode);
 	void AddComponent( PmeUpdateInfoItem item );
 	void UpdateComponent( PmeUpdateInfoItem hItem );
+	void HandleComponent(PmeHComponent hComponent, PmeUpdateInfoItem item);
+
 	void AddPart( PmeUpdateInfoItem item );
 	void UpdatePart( PmeUpdateInfoItem item );
-	void HandleComponent(PmeHComponent hComponent, PmeUpdateInfoItem item);
+	
+	void AddConstraints( PmeUpdateInfoItem item);
+	void UpdateConstraints( PmeUpdateInfoItem hItem );
 
  	HTREEITEM FindComponentTreeNode( HTREEITEM hRootNode, PmeHComponent hItem );
 	HTREEITEM FindComponentTreeNodeByName( CString componentName, HTREEITEM hItem = NULL );

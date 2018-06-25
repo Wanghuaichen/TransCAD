@@ -20,7 +20,7 @@ PmeComponent::PmeComponent( PmePart * pPart )
 	m_compType = PmeAssemblyComponentType_Component;
 
 	AddPart( pPart );
-	isUpdated = TRUE;		
+	isUpdated = TRUE;
 }
 PmeComponent::PmeComponent()
 {

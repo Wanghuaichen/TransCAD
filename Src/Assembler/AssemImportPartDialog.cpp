@@ -186,5 +186,8 @@ bool AssemImportPartDialog::ImportPart()
 	
 	PmeAssemblyAPI::UpdateAll( m_hAssembly );
 
+	MrAxis2 placement;
+	PmePartAPI::GetPlacement( importedPart, placement);
+
 	return true;
 }

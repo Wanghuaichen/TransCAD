@@ -455,6 +455,7 @@ interface IPart : IDispatch{
 	[id(18), helpstring("SelectSketchSegmentByName")] HRESULT SelectSketchSegmentByName([in] BSTR name, [out, retval] IReference** ppVal);
 	/** Solid 객체를 리턴합니다. */
 	[propget, id(19), helpstring("ISolid 객체를 리턴합니다.")] HRESULT Solid([out, retval] ISolid** ppVal);
+	[id(20), helpstring("Part의 좌표를 리턴합니다.")] HRESULT GetPlacement([out] double* ox, [out] double* oy, [out] double* oz, [out] double* xx, [out] double* xy, [out] double* xz, [out] double* yx, [out] double* yy, [out] double* yz);
 };
 
 /** IFeatures 인터페이스 */

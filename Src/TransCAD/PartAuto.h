@@ -59,6 +59,9 @@ public:
 	STDMETHOD(get_ParentName)(BSTR* pVal);
 	STDMETHOD(get_Features)(IFeatures** ppVal);
 	STDMETHOD(get_Solid)(ISolid** ppVal);
+	
+	STDMETHOD(GetPlacement)(double* ox, double* oy, double* oz, double* xx, double* xy, double* xz, double* yx, double* yy, double* yz);
+
 	STDMETHOD(CreateReferences)(IReferences** ppVal);
 	STDMETHOD(SelectObjectByName)(BSTR name, IReference** ppVal);
 	STDMETHOD(SelectBrepByName)(BSTR name, IReference** ppVal);

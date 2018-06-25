@@ -188,7 +188,8 @@ BOOL AssemDocument::OnNewDocument()
 
 	Initialize();	
 
-	//OnTestmodelCreateA1Model();
+	// Test code here
+
 	
 
 	return TRUE;
@@ -575,10 +576,16 @@ void AssemDocument::OnTestmodelCreateA1Model()
 
 #endif
 
+	//MrAxis2 currentPlacement;
+	//PmePartAPI::GetPlacement( m_hConstrainedPart, currentPlacement );
+
 	// 모델 구분을 쉽게 하기위해, 위치 이동
 	MrAxis2 t = MrAxis2( MrPosition( 160.0, 50.0, 80.0 ), MrDirection( 0.0, 0.0, 1.0 ), MrDirection( 1.0, 0.0, 0.0 ) );
 
 	PmePartAPI::SetPlacement( m_hConstrainedPart, t );
+
+	MrAxis2 currentPlacement2;
+	PmePartAPI::GetPlacement( m_hConstrainedPart, currentPlacement2 );
 
 	PmeComponentAPI::Create( hComp );
 	PmeComponentAPI::SetName( hComp, "SubAssembly1" );

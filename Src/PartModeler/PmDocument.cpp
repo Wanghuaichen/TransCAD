@@ -488,9 +488,13 @@ void PmDocument::OnImportFromNX()
 		
 		if (path.Find(_T(".prt")) == -1)
 			path = path + _T(".") + extension;
-
-		path = _T("translators\\UGPre_argv.exe ") + path;
 		
+#ifdef _DEBUG
+		path = _T("..\\..\\RegBin\\translators\\UGPre_argv.exe ") + path;
+#else
+		path = _T("translators\\UGPre_argv.exe ") + path;
+#endif
+
 		LPCSTR command = (LPSTR)(LPCTSTR)path;
 
 		WinExec(command, SW_SHOW);
@@ -501,7 +505,54 @@ void PmDocument::OnImportFromNX()
 
 void PmDocument::OnExportToNX()
 {
-	/** NX UG 10.0 버전 전용 **/
+	/*
+	HINSTANCE hDLL;               // Handle to DLL
+	StartService fnStartservice;    // Function pointer
+	Translate fnTranslate;
+	
+	hDLL = LoadLibrary("dllUGPost.dll");
+
+	TRACE("%d",GetLastError());
+
+	CString filter = _T("NX file (*.prt) |*.prt|");
+	CFileDialog dlg(TRUE, NULL, NULL, OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT | OFN_EXPLORER, filter);
+
+	if (dlg.DoModal())
+	{
+		CString extension = _T("prt");
+		CString name = dlg.m_ofn.lpstrFile;
+
+		if (name == _T(""))
+		{
+			FreeLibrary(hDLL);
+			return;
+		}
+
+		name.Replace("\\","\\\\");
+			
+		if (hDLL != NULL)
+		{
+
+			fnStartservice = (StartService)GetProcAddress(hDLL, "UGPostStartService");
+			fnTranslate = (Translate)GetProcAddress(hDLL, "UGPostTranslate");
+
+			if (!fnStartservice && !fnTranslate)
+			{
+				// handle the error
+				FreeLibrary(hDLL);       
+				AfxMessageBox("No dll");
+			}
+			else
+			{
+				// call the function
+				fnStartservice();
+				fnTranslate((char *)(LPCTSTR)name);
+			}
+		}
+	}
+	*/
+	
+	// NX UG 10.0 버전 전용 
 	CString filter = _T("NX Part file (*.prt) |*.prt|");
 	CFileDialog dlg(FALSE, NULL, NULL, OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT | OFN_EXPLORER, filter);
 
@@ -518,12 +569,17 @@ void PmDocument::OnExportToNX()
 		if (path.Find(_T(".prt")) == -1)
 			path = path + _T(".") + extension;
 
+#ifdef _DEBUG
+		path = _T("..\\..\\RegBin\\translators\\UGPost_argv.exe ") + path;
+#else
 		path = _T("translators\\UGPost_argv.exe ") + path;
+#endif
 	
 		LPCSTR command = (LPSTR)(LPCTSTR)path;
 
 		WinExec(command, SW_SHOW);
 	}
+	
 }
 
 void PmDocument::OnImportFromSolidWorks()

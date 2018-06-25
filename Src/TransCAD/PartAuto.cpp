@@ -79,7 +79,6 @@ HRESULT CPartAuto::GetHReferencesFromIReferences(IReferences* ppVal, PmeHReferen
 	return S_OK;
 }
 
-
 HRESULT CPartAuto::GetISolidFromHSolid(PmeHSolid hSolid, ISolid** ppVal)
 {
 	AFX_MANAGE_STATE(AfxGetAppModuleState());
@@ -178,6 +177,30 @@ STDMETHODIMP CPartAuto::get_Solid(ISolid** ppVal)
 	return GetISolidFromHSolid(hSolid, ppVal);
 }
 
+STDMETHODIMP CPartAuto::GetPlacement( double* ox, double* oy, double* oz, double* xx, double* xy, double* xz, double* yx, double* yy, double* yz )
+{
+	AFX_MANAGE_STATE(AfxGetAppModuleState());
+
+	MrAxis2 placement;
+
+	PmePartAPI::GetPlacement( m_hPart, placement );
+
+	MrPosition origin = placement.Location();
+	MrDirection xDirection = placement.XDirection();
+	MrDirection yDirection = placement.YDirection();
+
+	*ox = origin.X();
+	*oy = origin.Y();
+	*oz = origin.Z();
+	*xx = xDirection.X();
+	*xy = xDirection.Y();
+	*xz = xDirection.Z();
+	*yx = yDirection.X();
+	*yy = yDirection.Y();
+	*yz = yDirection.Z();
+
+	return S_OK;
+}
 
 STDMETHODIMP CPartAuto::CreateReferences(IReferences** ppVal)
 {
